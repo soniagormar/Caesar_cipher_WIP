@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+        types: [python]
+      - id: end-of-file-fixer
+        types: [python]
+      - id: mixed-line-ending
+        args: [--fix=lf]
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        name: "Format code using black"
+        types: [python]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: "Validate and fix ordering of Python import statements"
+        types: [ python ]
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.4.10
+    hooks:
+      - id: ruff
+        name: "Check code using ruff"
+        types_or: [ python ]
+        args: [ --fix ]
+  - repo: local
+    hooks:
+      - id: check-commit-message
+        name: "Verify the commit message"
+        language: system
+        entry: .git/hooks/commit-msg
+        stages: [commit-msg]
+
+#        echo "Checking message: $FIRST_LINE"
+#        echo
+#
+#        # Check if message includes FIX-- or FEAT-- .
+#        if ! grep -q -E "^feat|^fix"gmi; then
+#        echo "ERROR: Commit message have to contain ticket number and a description on the first line."
