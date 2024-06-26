@@ -46,14 +46,16 @@ class Menu:
         key = int(input("Enter key: "))
         encrypted_text = self.cipher.encrypt(text, key)
         print(f"Encrypted text: {encrypted_text} \n")
-        self.history.append(Record("encrypt text", text, encrypted_text, key))
+        record = Record("encrypt text", text, encrypted_text, key)
+        Record.to_save(record, self.history)
 
     def decrypt_text(self):
         text = input("Enter text to decrypt: ")
         key = int(input("Enter key: "))
         decrypted_text = self.cipher.encrypt(text, key)
         print(f"Decrypted text: {decrypted_text} \n")
-        self.history.append(Record("decrypt text", text, decrypted_text, key))
+        record = Record("decrypt text", text, decrypted_text, key)
+        Record.to_save(record, self.history)
 
     def encrypt_from_file(self):
         file_path = input("Enter path to JSON file: ")
@@ -61,7 +63,8 @@ class Menu:
         data = self.files.load_from_json(file_path)
         encrypted_data = self.cipher.encrypt(data, key)
         print(f"Encrypted data from file: {encrypted_data}\n")
-        self.history.append(Record("encrypt from file", data, encrypted_data, key))
+        record = Record("encrypt from file", data, encrypted_data, key)
+        Record.to_save(record, self.history)
 
     def decrypt_from_file(self):
         file_path = input("Enter path to JSON file: ")
@@ -69,7 +72,8 @@ class Menu:
         data = self.files.load_from_json(file_path)
         decrypted_data = self.cipher.decrypt(data, key)
         print(f"Encrypted data from file: {decrypted_data}\n")
-        self.history.append(Record("decrypt from file", data, decrypted_data, key))
+        record = Record("encrypt text", data, decrypted_data, key)
+        Record.to_save(record, self.history)
 
     def save_history_to_file(self):
         self.files.save_to_json(self.history)
