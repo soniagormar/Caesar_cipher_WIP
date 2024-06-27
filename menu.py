@@ -30,18 +30,22 @@ class Menu:
         }
 
     def start(self):
+        """starts the programm by printing MENU and asking for users choice of action"""
         while self.__is_running:
             print(MENU)
             self.get_and_execute_choice()
 
     def get_and_execute_choice(self):
+        """gets and executes users choice of action"""
         users_choice = input("Choose action: ")
         self.operations.get(users_choice, self.show_error)()
 
     def show_error(self):
+        """prints error message if user chose a number out of list"""
         print('Choose from the list!')
 
     def encrypt_text(self):
+        """encrypts text using users string and key, then saves data in history """
         text = input("Enter text to encrypt: ")
         key = int(input("Enter key: "))
         encrypted_text = self.cipher.encrypt(text, key)
@@ -50,6 +54,7 @@ class Menu:
         Record.to_save(record, self.history)
 
     def decrypt_text(self):
+        """decrypts text using users string and key, then saves data in history """
         text = input("Enter text to decrypt: ")
         key = int(input("Enter key: "))
         decrypted_text = self.cipher.encrypt(text, key)
@@ -58,6 +63,7 @@ class Menu:
         Record.to_save(record, self.history)
 
     def encrypt_from_file(self):
+        """encrypts text using users JSON file and key, then saves data in history """
         file_path = input("Enter path to JSON file: ")
         key = int(input("Enter key: "))
         data = self.files.load_from_json(file_path)
@@ -67,6 +73,7 @@ class Menu:
         Record.to_save(record, self.history)
 
     def decrypt_from_file(self):
+        """decrypts text using users JSON file and key, then saves data in history """
         file_path = input("Enter path to JSON file: ")
         key = int(input("Enter key: "))
         data = self.files.load_from_json(file_path)
@@ -76,16 +83,19 @@ class Menu:
         Record.to_save(record, self.history)
 
     def save_history_to_file(self):
+        """saves history to JSON file"""
         self.files.save_to_json(self.history)
         print("History saved.\n")
 
     def load_history_from_file(self):
+        """loads history from users JSON file"""
         file_path = input("Enter path to load JSON file: ")
         self.history = self.files.load_from_json(file_path)
         print("History loaded.")
         print()
 
     def end(self):
+        """ends program with user choosing whether user wants to save current work to JSON file"""
         save_choice = input('Do you want to save your work? Choose Y/N: ').upper()
 
         if save_choice == 'Y':
